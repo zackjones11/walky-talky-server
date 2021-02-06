@@ -10,6 +10,7 @@ import (
 type Client struct {
 	ID   int
 	Conn *websocket.Conn
+	Hub  *Hub
 }
 
 // Message contains the info we get from the client that needs to be sent
