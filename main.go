@@ -8,10 +8,20 @@ import (
 )
 
 func serveWs(hub *websocket.Hub, w http.ResponseWriter, r *http.Request) {
-	_, err := websocket.Upgrade(w, r)
+	conn, err := websocket.Upgrade(w, r)
 	if err != nil {
 		fmt.Println(err)
 	}
+
+	client := &websocket.Client{
+		ID:   len(hub.Clients),
+		Conn: conn,
+		Hub:  hub,
+	}
+
+	hub.NewClient <- client
+
+	client.Read()
 }
 
 
