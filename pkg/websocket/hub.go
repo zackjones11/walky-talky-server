@@ -30,6 +30,14 @@ func (hub *Hub) Start() {
 			for c := range hub.Clients {
 				c.Conn.WriteJSON(Message{Type: "NEW_USER", ClientID: c.ID})
 			}
+
+			if len(hub.Clients) > 1 {
+				for c := range hub.Clients {
+					if client.ID != c.ID {
+						c.Conn.WriteJSON(Message{Type: "START_CHAT", ClientID: c.ID})
+					}
+				}
+			}
 			break
 
 		case client := <-hub.Disconnect:
