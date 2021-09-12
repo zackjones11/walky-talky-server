@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/google/uuid"
 	"github.com/zackjones11/walky-talky-server/pkg/websocket"
 )
 
@@ -14,7 +15,7 @@ func serveWs(hub *websocket.Hub, w http.ResponseWriter, r *http.Request) {
 	}
 
 	client := &websocket.Client{
-		ID:   len(hub.Clients),
+		ID:   uuid.New(),
 		Conn: conn,
 		Hub:  hub,
 	}
